@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         Fragment homefragment = new HomeFragment();
         Fragment profilefragment = new ProfileFragment();
         Fragment settingfragment = new SettingFragment();
+        Fragment sensorfragment = new SensorFragment();
 
         setCurrentFragment(homefragment);
 
@@ -38,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
             }
             else if(id == R.id.settings){
                 setCurrentFragment(settingfragment);
+                return true;
+            }
+            else if(id == R.id.senser){
+                setCurrentFragment(sensorfragment);
                 return true;
             }
             return false;
