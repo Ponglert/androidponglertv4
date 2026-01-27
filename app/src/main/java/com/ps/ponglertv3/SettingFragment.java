@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -50,6 +51,29 @@ public class SettingFragment extends Fragment {
         button = (Button) view.findViewById(R.id.button);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+
+        if (ActivityCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new
+                            String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION},
+                    locationRequestCode);
+        }
+        if (mapFragment != null) {
+            mapFragment.getMapAsync(callbackactive);
+        }
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mapFragment != null) {
+                    mapFragment.getMapAsync(callbackactive);
+                }
+                Toast.makeText(getActivity(), "Get Your Location", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return view;
     }
 
@@ -77,16 +101,16 @@ public class SettingFragment extends Fragment {
         public void onMapReady(GoogleMap googleMap) {
             Get_Current_location();
             googleMap.clear();
-            String strtitle = "Your Location";
+            String strtitle = "Ponglert Location";
             String strsnippet = "I am Here at " + clat[0] + ", " + clng[0];
             LatLng cposition = new LatLng(clat[0], clng[0]);
             MarkerOptions options = new MarkerOptions()
-                    .position(new LatLng(clat[0], clng[0]))
+                    .position(cposition)
                     .title(strtitle)
                     .snippet(strsnippet)
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
             googleMap.addMarker(options);
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cposition, 12));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cposition, 15));
         }
     };
 }
