@@ -15,7 +15,13 @@ import android.widget.Button;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 public class SettingFragment extends Fragment {
@@ -65,4 +71,22 @@ public class SettingFragment extends Fragment {
                     }
                 });
     }
+
+    private OnMapReadyCallback callbackactive = new OnMapReadyCallback() {
+        @Override
+        public void onMapReady(GoogleMap googleMap) {
+            Get_Current_location();
+            googleMap.clear();
+            String strtitle = "Your Location";
+            String strsnippet = "I am Here at " + clat[0] + ", " + clng[0];
+            LatLng cposition = new LatLng(clat[0], clng[0]);
+            MarkerOptions options = new MarkerOptions()
+                    .position(new LatLng(clat[0], clng[0]))
+                    .title(strtitle)
+                    .snippet(strsnippet)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+            googleMap.addMarker(options);
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cposition, 12));
+        }
+    };
 }
