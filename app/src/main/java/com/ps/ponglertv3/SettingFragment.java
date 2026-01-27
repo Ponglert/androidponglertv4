@@ -109,8 +109,17 @@ public class SettingFragment extends Fragment {
                     .title(strtitle)
                     .snippet(strsnippet)
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+
+            LatLng cposition2 = new LatLng(15.246228413380893, 104.84522771608624);
+            MarkerOptions options2 = new MarkerOptions()
+                    .position(cposition2)
+                    .title("Maker 1")
+                    .snippet("คอมพิวเตอร์อยู่นี้")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+
             googleMap.addMarker(options);
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cposition, 15));
+            googleMap.addMarker(options2);
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cposition2, 15));
         }
     };
 }
